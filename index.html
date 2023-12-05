@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Djikstra Visualization</title>
+  </head>
+  <body>
+    <header class="toolbar toolbar-header" style="position: fixed; width: 100%">
+      <div class="toolbar-actions">
+        <div class="btn-group">
+          <button class="btn btn-default" id="btn_select">
+            <span class="icon icon-lock-open icon-text"></span> Select
+          </button>
+          <button class="btn btn-default" id="btn_addPoint">
+            <span class="icon icon-plus-circled icon-text"></span> Node
+          </button>
+          <button class="btn btn-default" id="btn_addEdge">
+            <span class="icon icon-plus-circled icon-text"></span> Edge
+          </button>
+          <button class="btn btn-default" id="btn_clearPoint">
+            <span class="icon icon-trash icon-text"></span> Clear
+          </button>
+        </div>
+
+        <button class="btn btn-default" id="btn_run_algorithm">
+          <span class="icon icon-play icon-text"></span>
+          Run
+        </button>
+      </div>
+    </header>
+    <div style="position: fixed; top: 38px">
+      <span style="margin-left: 10px">Shortest Path</span>
+      <div style="display: flex; width: 270px; margin-left: 10px">
+        <select
+          class="form-control"
+          style="margin-right: 5px"
+          id="from"
+        ></select>
+        <select class="form-control" id="to"></select>
+      </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+
+    <script src="/src/jquery.min.js"></script>
+    <script type="module" src="/src/renderer.js"></script>
+  </body>
+</html>
