@@ -363,13 +363,24 @@ function runDijkstra() {
   calculateNode();
 }
 
-function updateEdgesCost() {
-  edges.forEach((edge) => {
-    edge.cost = parseInt(
-      getPointsDistance(edge.a.x, edge.a.y, edge.b.x, edge.b.y),
-      10
-    );
-  });
+function openModalCost(name) {
+  $("#costModal input[name=edge_name]").val(name);
+  $("#costModal").modal();
+}
+
+function updateEdgesCost(evt) {
+  evt.preventDefault();
+  $.modal.close();
+
+  const cost = $("#costModal input[name=cost]").val();
+  const edgeName = $("#costModal input[name=edge_name]").val();
+
+  const edgeIndex = edges.findIndex((x) => x.name == edgeName);
+  edges[edgeIndex].cost = parseInt(cost);
+
+  updateCanvas();
+
+  $("#costModal input[name=cost]").val(null);
 }
 
 function addNewEdge(pointA, pointB) {
@@ -383,7 +394,7 @@ function addNewEdge(pointA, pointB) {
     b: pointB,
     cost: null,
   });
-  updateEdgesCost();
+  openModalCost(`${pointA.name}_${pointB.name}`);
 }
 
 function createPointHtml(point) {
@@ -419,7 +430,6 @@ function onDragPoint(state) {
   holdingPoint.y = holdingPoint.y + (evt.clientY - y);
   dragPos.x = evt.clientX;
   dragPos.y = evt.clientY;
-  updateEdgesCost();
   state.cursor = "grabbing";
   state.needUpdate = true;
 }
@@ -620,6 +630,8 @@ function initialize() {
 
   $(document).on("mousemove", onMouseMove).on("mousedown", onMouseDown);
   $(window).on("resize", onWindowResize);
+  $("#costModal").on("submit", updateEdgesCost);
+  // $("#btn_clearPoint").on("click", resetGraph);
 
   $notification.addClass("hide");
   onWindowResize();

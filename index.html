@@ -42,7 +42,21 @@
 
     <canvas id="canvas"></canvas>
 
+    <form id="costModal" class="modal">
+      <div class="form-group">
+        <label>Cost</label>
+        <input type="number" class="form-control" name="cost" />
+        <input type="text" name="edge_name" hidden />
+      </div>
+      <button type="submit" class="btn btn-default">OK</button>
+    </form>
+
     <script src="/src/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+    />
     <script type="module" src="/src/renderer.js"></script>
   </body>
 </html>
