@@ -29,18 +29,8 @@
 import "./css/index.css";
 import "./css/photon.min.css";
 
-const translatePos = {
-  x: window.innerWidth / 2,
-  y: window.innerHeight / 2,
-};
-const initialPoints = [[0, 0]].map((pointData) => {
-  pointData[0] = pointData[0] + translatePos.x;
-  pointData[1] = pointData[1] + translatePos.y;
-  return pointData;
-});
-const initialEdges = [];
-const points = [];
-const edges = [];
+let points = [];
+let edges = [];
 const canvas = document.getElementById("canvas");
 const $canvas = $(canvas);
 const ctx = canvas.getContext("2d");
@@ -330,6 +320,14 @@ function calculateNode() {
   }, animationSpeed);
 }
 
+function clearGraph() {
+  points = [];
+  edges = [];
+  $from.empty();
+  $to.empty();
+  updateCanvas();
+}
+
 function resetGraph() {
   edges.forEach((edge) => {
     edge.shortestPath = false;
@@ -600,27 +598,6 @@ function onRunClick() {
 }
 
 function initialize() {
-  // Points
-  initialPoints.forEach((pointPos) => {
-    const pointData = {
-      name: String.fromCharCode(65 + points.length),
-      x: pointPos[0],
-      y: pointPos[1],
-    };
-    points.push(pointData);
-    createPointHtml(pointData);
-  });
-  $to.val(points[points.length - 1].name);
-
-  // Edges
-  let pointA;
-  let pointB;
-  initialEdges.forEach((edgeName) => {
-    pointA = points[edgeName.charCodeAt(0) - 65];
-    pointB = points[edgeName.charCodeAt(2) - 65];
-    addNewEdge(pointA, pointB);
-  });
-
   // Tools
   tools.forEach((tool, i) => tool.$html.on("click", () => selectTool(i)));
   selectTool(toolsNames.select);
@@ -631,7 +608,7 @@ function initialize() {
   $(document).on("mousemove", onMouseMove).on("mousedown", onMouseDown);
   $(window).on("resize", onWindowResize);
   $("#costModal").on("submit", updateEdgesCost);
-  // $("#btn_clearPoint").on("click", resetGraph);
+  $("#btn_clearPoint").on("click", clearGraph);
 
   $notification.addClass("hide");
   onWindowResize();
