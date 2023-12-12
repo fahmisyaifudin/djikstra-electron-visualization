@@ -325,6 +325,12 @@ function clearGraph() {
   edges = [];
   $from.empty();
   $to.empty();
+  running = false;
+  trackedCosts = {};
+  processedNodes = [];
+  trackedParents = {};
+  optimalPath = [];
+
   updateCanvas();
 }
 
